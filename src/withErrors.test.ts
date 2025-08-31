@@ -1,12 +1,12 @@
 import { describe, expect, it } from 'vitest';
-import { withCompoundErrors } from './withCompoundErrors';
+import { withErrors } from './withErrors';
 
 class CustomError extends Error {}
 
-describe('withCompoundErrors', () => {
+describe('withErrors', () => {
   describe('class', () => {
     it('should merge errors to methods', () => {
-      const MyClass = withCompoundErrors(
+      const MyClass = withErrors(
         class MyClass {
           method1() {
             throw new CustomError();
@@ -23,7 +23,7 @@ describe('withCompoundErrors', () => {
     });
 
     it('should be able to check instance of in error', () => {
-      const MyClass = withCompoundErrors(
+      const MyClass = withErrors(
         class MyClass {
           method1() {
             throw new CustomError();
@@ -42,7 +42,7 @@ describe('withCompoundErrors', () => {
           throw new CustomError();
         }
       }
-      const MyClass = withCompoundErrors(OriginalClass, {
+      const MyClass = withErrors(OriginalClass, {
         method1: { CustomError },
       });
 
@@ -56,7 +56,7 @@ describe('withCompoundErrors', () => {
 
   describe('function', () => {
     it('should merge errors to function', () => {
-      const test = withCompoundErrors(
+      const test = withErrors(
         () => {
           throw new CustomError();
         },
@@ -66,7 +66,7 @@ describe('withCompoundErrors', () => {
     });
 
     it('should be able to check instance of in error', () => {
-      const test = withCompoundErrors(
+      const test = withErrors(
         () => {
           throw new CustomError();
         },
@@ -79,12 +79,12 @@ describe('withCompoundErrors', () => {
       const originalFunction = () => {
         throw new CustomError();
       };
-      const test = withCompoundErrors(originalFunction, { CustomError });
+      const test = withErrors(originalFunction, { CustomError });
       expect(test).toBe(originalFunction);
     });
 
     it('should be able to use typed error', () => {
-      const test = withCompoundErrors(
+      const test = withErrors(
         () => {
           throw new test.CustomError();
         },

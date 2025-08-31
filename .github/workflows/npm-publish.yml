@@ -5,6 +5,11 @@ on:
     branches:
       - main
 
+permissions:
+  contents: write
+  pull-requests: write
+  id-token: write
+
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -44,7 +49,7 @@ jobs:
         id: changesets
         uses: changesets/action@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN || secrets.GITHUB_TOKEN }}
 
       - name: Get Package Version
         id: package-version
@@ -62,7 +67,17 @@ jobs:
 
       - name: Publish to NPM
         if: steps.changesets.outputs.hasChangesets == 'false' && steps.check-release.outputs.exists == 'false'
-        run: pnpm publish --no-git-checks
+        run: |
+          # NPM에서 현재 버전 확인
+          CURRENT_VERSION=$(node -p "require('./package.json').version")
+          NPM_VERSION=$(npm show compound-errors version 2>/dev/null || echo "0.0.0")
+          
+          if [ "$CURRENT_VERSION" != "$NPM_VERSION" ]; then
+            echo "배포 시작: $CURRENT_VERSION (NPM: $NPM_VERSION)"
+            pnpm publish --access public --no-git-checks
+          else
+            echo "동일한 버전이 이미 배포됨: $CURRENT_VERSION"
+          fi
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 

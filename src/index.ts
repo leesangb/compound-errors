@@ -1,1 +1,1 @@
-export { withCompoundErrors } from './withCompoundErrors';
+export { withErrors } from './withErrors';

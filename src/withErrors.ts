@@ -7,7 +7,7 @@ function isClass(input: any): input is new (...args: any[]) => any {
  * @param BaseClass class to annotate
  * @param errorConfig errors to link by methods
  */
-export function withCompoundErrors<
+export function withErrors<
   TBaseClass extends new (
     ...args: any[]
   ) => any,
@@ -33,12 +33,12 @@ export function withCompoundErrors<
  * @param fn function to annotate
  * @param errors errors to link
  */
-export function withCompoundErrors<
+export function withErrors<
   T extends (...args: any[]) => any,
   const TErrors extends { [key: string]: new (...args: any[]) => Error },
 >(fn: T, errors: TErrors): T & TErrors;
 
-export function withCompoundErrors(
+export function withErrors(
   target: ((...args: any[]) => any) | (new (...args: any[]) => any),
   config: object,
 ): any {

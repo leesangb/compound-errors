@@ -35,8 +35,7 @@
     "lint": "biome lint",
     "dev": "tsup --watch",
     "test": "vitest",
-    "prepublish": "pnpm build",
-    "publish": "pnpm publish --access public"
+    "prepublish": "pnpm build"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.2.2",
