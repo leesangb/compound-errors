@@ -1,0 +1,47 @@
+{
+  "name": "compound-errors",
+  "version": "0.1.0",
+  "description": "A simple HOC utility to attach error classes to functions and class methods at both typescript type system and runtime.",
+  "type": "module",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/leesangb/compound-errors.git"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Sangbin Lee",
+    "email": "leesangbin@outlook.com"
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "test": "vitest",
+    "prepublish": "pnpm build",
+    "publish": "pnpm publish --access public"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.2.2",
+    "@changesets/cli": "^2.29.6",
+    "@types/node": "^24.3.0",
+    "tsup": "^8.5.0",
+    "typescript": "^5.9.2",
+    "vitest": "^3.2.4"
+  }
+}
