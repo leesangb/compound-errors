@@ -61,7 +61,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Publish to NPM
-        if: steps.changesets.outputs.hasChangesets == 'false'
+        if: steps.changesets.outputs.hasChangesets == 'false' && steps.check-release.outputs.exists == 'false'
         run: pnpm publish --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
