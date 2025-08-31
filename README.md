@@ -33,7 +33,7 @@ yarn add compound-errors
 Annotate standalone functions with their possible errors:
 
 ```typescript
-import { withCompoundErrors } from 'compound-errors';
+import { withErrors } from 'compound-errors';
 
 // Define custom error classes
 class ValidationError extends Error {
@@ -51,7 +51,7 @@ class NetworkError extends Error {
 }
 
 // Annotate function with possible errors
-const fetchUserData = withCompoundErrors(
+const fetchUserData = withErrors(
   async (userId: string) => {
     if (!userId) {
       throw new fetchUserData.ValidationError('User ID is required');
@@ -89,7 +89,7 @@ try {
 Annotate class methods with their possible errors:
 
 ```typescript
-import { withCompoundErrors } from 'compound-errors';
+import { withErrors } from 'compound-errors';
 
 class AuthenticationError extends Error {
   constructor(message: string) {
@@ -120,7 +120,7 @@ class UserService {
 }
 
 // Annotate class with method-specific errors
-const TypedUserService = withCompoundErrors(UserService, {
+const TypedUserService = withErrors(UserService, {
   login: {
     AuthenticationError,
     DatabaseError,
@@ -151,9 +151,9 @@ try {
 ```
 
 ```typescript
-import { withCompoundErrors } from 'compound-errors';
+import { withErrors } from 'compound-errors';
 
-const UserService = withCompoundErrors(class UserService {
+const UserService = withErrors(class UserService {
   login(username: string, password: string) {
     // Login implementation
     throw new AuthenticationError('Invalid username or password');
@@ -195,7 +195,7 @@ Functions and methods clearly declare what errors they can throw:
 
 ```typescript
 // Just by looking at the function signature, you know what errors to expect
-const processPayment = withCompoundErrors(originalFunction, {
+const processPayment = withErrors(originalFunction, {
   PaymentError,
   ValidationError,
   NetworkError,
@@ -220,7 +220,7 @@ throw new PaymentError('Insufficient funds'); // Less clear relationship
 
 ## API Reference
 
-### `withCompoundErrors(fn, errors)`
+### `withErrors(fn, errors)`
 
 Annotates a function with error types.
 
@@ -230,7 +230,7 @@ Annotates a function with error types.
 
 **Returns:** The original function with error constructors attached as properties
 
-### `withCompoundErrors(BaseClass, errorConfig)`
+### `withErrors(BaseClass, errorConfig)`
 
 Annotates a class with method-specific error types.
 
