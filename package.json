@@ -1,6 +1,6 @@
 {
   "name": "compound-errors",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A simple HOC utility to attach error classes to functions and class methods at both typescript type system and runtime.",
   "type": "module",
   "publishConfig": {
