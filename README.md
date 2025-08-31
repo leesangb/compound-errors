@@ -150,6 +150,29 @@ try {
 }
 ```
 
+```typescript
+import { withCompoundErrors } from 'compound-errors';
+
+const UserService = withCompoundErrors(class UserService {
+  login(username: string, password: string) {
+    // Login implementation
+    throw new AuthenticationError('Invalid username or password');
+    // ...
+  }
+  createUser(userData: object) {
+    // Create user implementation
+  }
+  deleteUser(userId: string) {
+    // Delete user implementation
+  }
+}, {
+  login: {
+    AuthenticationError,
+    DatabaseError,
+  },
+});
+```
+
 ## Benefits
 
 ### 1. **Type Safety**
@@ -207,7 +230,7 @@ Annotates a function with error types.
 
 **Returns:** The original function with error constructors attached as properties
 
-### `withTypedErrors(BaseClass, errorConfig)`
+### `withCompoundErrors(BaseClass, errorConfig)`
 
 Annotates a class with method-specific error types.
 
